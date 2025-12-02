@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Views Container -->
+<div id="views-container">
+
+    <!-- HOME VIEW -->
+    <section id="view-home" class="view active">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Gestión de Asistencia <br><span class="gradient-text">Inteligente & Rápida</span></h1>
+                <p>Soluciones integrales para empresas y particulares. Cotiza, gestiona y sigue tus solicitudes en
+                    tiempo real.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="app.navigate('catalog')">Ver Servicios</button>
+                    <button class="btn btn-outline" onclick="app.navigate('login')">Iniciar Sesión</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="floating-card card-1">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>Rápido</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fa-solid fa-shield-check"></i>
+                    <span>Seguro</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fa-solid fa-headset"></i>
+                    <span>24/7</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOGIN VIEW -->
+    <section id="view-login" class="view hidden">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Bienvenido de nuevo</h2>
+                <p>Ingresa a tu cuenta para gestionar tus servicios</p>
+                <form id="login-form" onsubmit="app.handleLogin(event)">
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <input type="text" name="username" required placeholder="Tu usuario">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+                </form>
+                <p class="auth-footer">
+                    ¿No tienes cuenta? <a href="#" onclick="app.navigate('register')">Regístrate aquí</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- REGISTER VIEW -->
+    <section id="view-register" class="view hidden">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Crear Cuenta</h2>
+                <p>Únete a AsistenciaPro hoy mismo</p>
+                <form id="register-form" onsubmit="app.handleRegister(event)">
+                    <div class="form-group">
+                        <label>Usuario</label>
+                        <input type="text" name="username" required placeholder="Elige un usuario">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required placeholder="tu@email.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Contraseña</label>
+                        <input type="password" name="password" required placeholder="••••••••">
+                    </div>
+                    <div class="form-group">
+                        <label>Tipo de Cuenta</label>
+                        <select name="role">
+                            <option value="cliente">Personal (B2C)</option>
+                            <option value="empresa">Empresa (B2B)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Registrarse</button>
+                </form>
+                <p class="auth-footer">
+                    ¿Ya tienes cuenta? <a href="#" onclick="app.navigate('login')">Ingresa aquí</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATALOG VIEW -->
+    <section id="view-catalog" class="view hidden">
+        <div class="container section-header">
+            <h2>Nuestros Servicios</h2>
+            <p>Explora nuestro catálogo de soluciones profesionales</p>
+
+            <!-- Segment Filters -->
+            <div class="segment-filters"
+                style="margin-top:20px; display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-outline active" onclick="app.filterServices('all', this)">Todos</button>
+                <button class="btn btn-outline" onclick="app.filterServices('cartech', this)">🚗 Cartech</button>
+                <button class="btn btn-outline" onclick="app.filterServices('foodtech', this)">🍔 Foodtech</button>
+                <button class="btn btn-outline" onclick="app.filterServices('agetech', this)">👴 Agetech</button>
+            </div>
+
+            <div id="admin-actions-catalog" style="margin-top: 20px;">
+                <!-- Admin button injected here -->
+            </div>
+        </div>
+        <div class="container">
+            <div id="services-grid" class="services-grid">
+                <!-- Services will be injected here -->
+                <div class="loading-spinner">Cargando servicios...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="view-dashboard" class="view hidden">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Mi Panel de Control</h2>
+                <div id="dashboard-actions">
+                    <button class="btn btn-primary" onclick="app.navigate('catalog')">+ Nueva Solicitud</button>
+                </div>
+            </div>
+
+            <div class="stats-grid" id="dashboard-stats">
+                <!-- Stats injected here -->
+            </div>
+
+            <div class="dashboard-content">
+                <h3>Mis Solicitudes Recientes</h3>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Servicio</th>
+                                <th>Fecha</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requests-table-body">
+                            <!-- Requests injected here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REQUEST DETAIL VIEW -->
+    <section id="view-request-detail" class="view hidden">
+        <div class="container">
+            <button class="btn btn-text" onclick="app.navigate('dashboard')"><i class="fa-solid fa-arrow-left"></i>
+                Volver</button>
+            <div class="detail-card" id="request-detail-content">
+                <!-- Detail content injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- CREATE SERVICE MODAL -->
+    <div id="modal-create-service" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="app.closeModal('create-service')">&times;</span>
+            <h2 id="service-modal-title">Nuevo Servicio</h2>
+            <form id="service-form" onsubmit="app.handleSaveService(event)">
+                <input type="hidden" name="id" id="service-id">
+                <div class="form-group">
+                    <label>Nombre</label>
+                    <input type="text" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label>Descripción</label>
+                    <textarea name="descripcion" required class="form-control"
+                        style="width:100%; padding:10px; background:var(--bg-dark); color:white; border:1px solid var(--border); border-radius:var(--radius)"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Segmento</label>
+                    <select name="segmento" required
+                        style="width:100%; padding:10px; background:var(--bg-dark); color:white; border:1px solid var(--border); border-radius:var(--radius)">
+                        <option value="cartech">Cartech</option>
+                        <option value="foodtech">Foodtech</option>
+                        <option value="agetech">Agetech</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Tarifa Base ($)</label>
+                    <input type="number" name="tarifa_base" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Crear Servicio</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- REQUEST SERVICE MODAL -->
+    <div id="modal-request-service" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-modal" onclick="app.closeModal('request-service')">&times;</span>
+            <h2 id="request-service-title">Solicitar Servicio</h2>
+            <p id="request-service-desc" style="color:var(--text-muted); margin-bottom:20px"></p>
+
+            <form id="request-form" onsubmit="app.handleCreateRequest(event)">
+                <input type="hidden" name="servicio_id" id="request-service-id">
+
+                <div class="form-group">
+                    <label>Descripción General</label>
+                    <textarea name="descripcion" required class="form-control"
+                        style="width:100%; padding:10px; background:var(--bg-dark); color:white; border:1px solid var(--border); border-radius:var(--radius)"
+                        placeholder="Describe brevemente lo que necesitas..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Ubicación del Servicio</label>
+                    <input type="text" name="ubicacion" required
+                        placeholder="Dirección o ubicación donde se necesita el servicio">
+                </div>
+
+                <!-- Dynamic Fields Container -->
+                <div id="dynamic-fields-container"></div>
+
+                <button type="submit" class="btn btn-primary btn-block">Enviar Solicitud</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- WHATSAPP NUMBER MODAL -->
+    <div id="modal-whatsapp-number" class="modal hidden">
+        <div class="modal-content" style="max-width: 400px;">
+            <span class="close-modal" onclick="app.closeModal('whatsapp-number')">&times;</span>
+            <h2>Enviar por WhatsApp</h2>
+            <p>Ingresa el número al cual deseas enviar la cotización:</p>
+            <form onsubmit="app.sendWhatsApp(event)">
+                <input type="hidden" id="whatsapp-request-id">
+                <input type="hidden" id="whatsapp-message-text">
+                <div class="form-group">
+                    <label>Número de Teléfono</label>
+                    <input type="tel" name="phone" required placeholder="Ej: 3001234567" pattern="[0-9]+"
+                        title="Solo números">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block"
+                    style="background:#25D366; border-color:#25D366">
+                    <i class="fa-brands fa-whatsapp"></i> Enviar
+                </button>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

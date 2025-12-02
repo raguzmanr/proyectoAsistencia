@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asistencia Premium | Gestión de Servicios</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="container">
+                <a href="#" class="logo" onclick="app.navigate('home')">
+                    <i class="fa-solid fa-shield-halved"></i> Asistencia<span class="highlight">Pro</span>
+                </a>
+                
+                <div class="nav-links" id="navLinks">
+                    <button class="btn btn-text" onclick="app.navigate('home')">Inicio</button>
+                    <button class="btn btn-text" onclick="app.navigate('catalog')">Servicios</button>
+                </div>
+                
+                <div class="nav-actions" id="navActions">
+                    <div id="user-display" style="color: white; margin-right: 15px; display: inline-flex; align-items: center;"></div>
+                    <div id="auth-buttons" style="display: inline-block;">
+                        <button class="btn btn-outline" onclick="app.navigate('login')">Iniciar Sesión</button>
+                        <button class="btn btn-primary" onclick="app.navigate('register')">Registrarse</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 AsistenciaPro. Todos los derechos reservados.</p>
+            </div>
+        </footer>
+
+        <!-- Toast Notifications -->
+        <div id="toast-container"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
